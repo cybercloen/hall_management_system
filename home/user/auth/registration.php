@@ -3,14 +3,27 @@ require_once 'db.php';
 
 // Registration form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST["username"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-    $confirm_password = $_POST["confirm_password"];
-    $first_name = $_POST["first_name"];
-    $last_name = $_POST["last_name"];
-    $phone_number = $_POST["phone_number"];
-    $address = $_POST["address"];
+    $username = test_input($_POST["username"]);
+    $email = test_input($_POST["email"]);
+    $password = test_input($_POST["password"]);
+    $confirm_password = test_input($_POST["confirm_password"]);
+    $first_name = test_input($_POST["first_name"]);
+    $last_name = test_input($_POST["last_name"]);
+    $phone_number = test_input($_POST["phone_number"]);
+    $address = test_input($_POST["address"]);
+
+
+
+    function test_input($data){
+        $data = trim($data);
+        $data = stripslahes($data);
+        $data = htmlspecialchar($data);
+        return $data;
+    }
+
+
+
+
 
     // Validate input
     $errors = [];
@@ -33,8 +46,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($last_name)) {
         $errors[] = "Please fill in the last name field.";
     }
-    if (empty($phone_number)) {
-        $errors[] = "Please fill in the phone number field.";
+    if( !empty($phone_number) ) 
+        {
+            $pattern = '/^(?:\(\+?44\)\s?|\+?44 ?)?(?:0|\(0\))?\s?(?:(?:1\d{3}|7[1-9]\d{2}|20\s?[78])\s?\d\s?\d{2}[ -]?\d{3}|2\d{2}\s?\d{3}[ -]?\d{4})$/';
+            if(!preg_match($pattern, $phone_numner)){
+                $error[] = 'Please enter a valid phone number!';
+            }
     }
     if (empty($address)) {
         $errors[] = "Please fill in the address field.";
@@ -55,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Check if user was inserted successfully
         if ($stmt->affected_rows > 0) {
             $success_message = "Registration successful! You can now log in.";
-            header("Location: login.php");
+            header('Location: login.php');
             exit;
         } else {
             $error_message = "Registration failed. Please try again.";

@@ -1,37 +1,38 @@
 <?php
 require_once 'db.php';
 
-// Check if the user is logged in
-// if (!isset($_SESSION['admin_logged_in'])) {
-//   header('Location: login.php');
-//   exit;
-// }
+//Check if the user is logged in
+if (!isset($_SESSION['admin_logged_in'])) {
+  header('Location: login.php');
+  exit;
+}
+
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $name = $_POST["name"];
-  $capacity = $_POST["capacity"];
-  $location = $_POST["location"];
-  $description = $_POST["description"];
-  $interior_image_url = $_POST["interior_image_url"];
-  $exterior_image_url = $_POST["exterior_image_url"];
-  $rental_per_day = $_POST["rental_per_day"];
+    $name = $_POST["name"];
+    $capacity = $_POST["capacity"];
+    $location = $_POST["location"];
+    $description = $_POST["description"];
+    $interior_image_url = $_POST["interior_image_url"];
+    $exterior_image_url = $_POST["exterior_image_url"];
+    $rental_per_day = $_POST["rental_per_day"];
 
+    // Insert hall into database
+    $stmt = $conn->prepare("INSERT INTO halls (name, capacity, location, description, interior_image_url, exterior_image_url, rental_per_day) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssss", $name, $capacity, $location, $description, $interior_image_url, $exterior_image_url, $rental_per_day);
+    $stmt->execute();
 
-  // Insert hall into database
-  $sql = "INSERT INTO halls (name, capacity, location, description, interior_image_url, exterior_image_url, rental_per_day) VALUES ('$name', '$capacity', '$location', '$description', '$interior_image_url', '$exterior_image_url', '$rental_per_day')";
-  $result = mysqli_query($conn, $sql);
-
-  if ($result) {
-    echo "Hall added successfully!";
-    header("Location: dashboard.php");
-  } else {
-    echo "Error adding hall: " . mysqli_error($conn);
-  }
+    if ($stmt->affected_rows > 0) {
+        echo "Hall added successfully!";
+        header('Location: view_hall.php');
+        exit;
+    } else {
+        echo "Error adding hall: " . $stmt->error;
+        exit;
+    }
 }
-
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>

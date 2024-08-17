@@ -272,3 +272,150 @@ ul li a:hover{
     padding-bottom: 10px;
     text-align: center;
 }
+/* Mobile devices (max-width: 768px) */
+
+@media only screen and (max-width: 768px) {
+
+    .main {
+  
+      height: auto;
+  
+    }
+  
+    .navbar {
+  
+      width: 100%;
+  
+      height: 50px;
+  
+    }
+  
+    .icon {
+  
+      width: 100px;
+  
+      height: 40px;
+  
+    }
+  
+    .logo {
+  
+      font-size: 24px;
+  
+    }
+  
+    .menu {
+  
+      width: 100%;
+  
+      height: 40px;
+  
+    }
+  
+    ul {
+  
+      flex-direction: column;
+  
+    }
+  
+    ul li {
+  
+      margin-left: 0;
+  
+      margin-top: 10px;
+  
+    }
+  
+    .search {
+  
+      width: 100%;
+  
+      margin-left: 0;
+  
+    }
+  
+    .srch {
+  
+      width: 100%;
+  
+      height: 30px;
+  
+    }
+  
+    .btn {
+  
+      width: 100%;
+  
+      height: 30px;
+  
+    }
+  
+    .content {
+  
+      width: 100%;
+  
+      height: auto;
+  
+    }
+  
+    .content h1 {
+  
+      font-size: 36px;
+  
+    }
+  
+    .content .par {
+  
+      padding-left: 10px;
+  
+      padding-bottom: 15px;
+  
+    }
+  
+    .content .cn {
+  
+      width: 100%;
+  
+      height: 30px;
+  
+    }
+  
+    .form {
+  
+      width: 100%;
+  
+      height: auto;
+  
+      position: relative;
+  
+      top: 0;
+  
+      left: 0;
+  
+    }
+  
+    .form h2 {
+  
+      width: 100%;
+  
+      font-size: 18px;
+  
+    }
+  
+    .form input {
+  
+      width: 100%;
+  
+      height: 25px;
+  
+    }
+  
+    .btnn {
+  
+      width: 100%;
+  
+      height: 30px;
+  
+    }
+  
+  }
