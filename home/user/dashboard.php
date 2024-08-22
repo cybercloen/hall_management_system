@@ -33,7 +33,7 @@ if (!$stmt) {
 
 $result = mysqli_stmt_get_result($stmt);
 
-// Display user dashboard
+// Display user dashboard 
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +54,7 @@ $result = mysqli_stmt_get_result($stmt);
         <h2><?php echo $booking["hall_name"]; ?></h2>
         <p>Event Name: <?php echo $booking["event_name"]; ?></p>
         <p>Event Date: <?php echo $booking["event_date"]; ?></p>
-        <p>Start Time: <?php echo $booking["start_time"]; ?></p>
+        <p>Start Time: <?php echo $bo oking["start_time"]; ?></p>
         <p>End Time: <?php echo $booking["end_time"]; ?></p>
       </div>
     </div>
