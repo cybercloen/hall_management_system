@@ -27,7 +27,13 @@ if (!$result) {
   die("SQL error: " . mysqli_error($conn));
 }
 
+<<<<<<< HEAD
 // Display user dashboard
+=======
+$result = mysqli_stmt_get_result($stmt);
+
+// Display user dashboard 
+>>>>>>> dcb5f7b55934d2a3d4aab4b95e67be62ca3e9818
 ?>
 
 <!DOCTYPE html>
@@ -97,10 +103,18 @@ if (!$result) {
     <div class="hall-card">
       <img src="hall_images/<?php echo htmlspecialchars($hall["hall_id"]); ?>.jpg" alt="<?php echo htmlspecialchars($hall["hall_name"]); ?>">
       <div class="hall-info">
+<<<<<<< HEAD
         <h2><?php echo htmlspecialchars($hall["hall_name"]); ?></h2>
         <p>Location: <?php echo htmlspecialchars($hall["location"]); ?></p>
         <p>Capacity: <?php echo htmlspecialchars($hall["capacity"]); ?></p>
         <p>Description: <?php echo htmlspecialchars($hall["description"]); ?></p>
+=======
+        <h2><?php echo $booking["hall_name"]; ?></h2>
+        <p>Event Name: <?php echo $booking["event_name"]; ?></p>
+        <p>Event Date: <?php echo $booking["event_date"]; ?></p>
+        <p>Start Time: <?php echo $bo oking["start_time"]; ?></p>
+        <p>End Time: <?php echo $booking["end_time"]; ?></p>
+>>>>>>> dcb5f7b55934d2a3d4aab4b95e67be62ca3e9818
       </div>
     </div>
     <?php } ?>
