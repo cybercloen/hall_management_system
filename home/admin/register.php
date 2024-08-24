@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute();
             if ($stmt->affected_rows > 0) {
                 $success = "Registration successful! You can now log in.";
-                header("Location: login.php");
+                header("Location:index.php");
                 exit;
             } else {
                 $error = "Registration failed. Please try again.";

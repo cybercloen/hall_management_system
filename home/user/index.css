@@ -419,3 +419,29 @@ ul li a:hover{
     }
   
   }
+  .form-group input[type="search"],
+.form-group select,
+.form-group button {
+    border-radius: 25px; /* Adjust the value for more or less rounding */
+    padding: 10px 15px; /* Add some padding for better appearance */
+    border: 1px solid #ccc; /* Light border */
+    outline: none; /* Remove default outline */
+    transition: border-color 0.3s; /* Smooth transition for border color */
+}
+
+.form-group input[type="search"]:focus,
+.form-group select:focus,
+.form-group button:hover {
+    border-color: #337ab7; /* Change border color on focus/hover */
+}
+
+.form-group button {
+    background-color: #337ab7; /* Button background color */
+    color: white; /* Button text color */
+    cursor: pointer; /* Change cursor on hover */
+    border: none; /* Remove default button border */
+}
+
+.form-group button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Booking</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="./images/logo.jpg" alt="Hotel Arc Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Recommended Places</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <button onclick="window.location.href='auth/login.html'" class="login-btn">Login</button>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Halls for <span class="highlight">memorable</span> moments rich in emotions</h1>
+            <p>within Buea</p>
+        </div>
+        <div class="hero-image">
+            <img src="images/pic1.jpg" alt="Hotel Building">
+            <div class="offer">
+                <span>Get personalized offers now!</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="booking">
+        <form class="form-group" action="options/search_hall.php" method="get">
+            <input type="search" name="query" placeholder="Search for a hall..." required>
+            <select name="search_by" class="form-group">
+              <option value="name">Name</option>
+              <option value="location">Location</option>
+              <option value="capacity">Capacity</option>
+              <option value="rental_per_day">Rental per day</option>
+            </select>
+            <button class="form-group" type="submit">Search</button>
+        </form>
+    </section>
+
+    <section class="slideshow">
+        <div class="slideshow-container">
+            <!-- Slide 1 -->
+            <div class="slide fade">
+                <img src="images/slide1.jpg" alt="Hall 1" class="slide-image">
+                <div class="caption">Hall 1 - Spacious Conference Room</div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="slide fade">
+                <img src="images/slide2.jpg" alt="Hall 2" class="slide-image">
+                <div class="caption">Hall 2 - Elegant Banquet Hall</div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="slide fade">
+                <img src="images/slide3.jpg" alt="Hall 3" class="slide-image">
+                <div class="caption">Hall 3 - Modern Meeting Room</div>
+            </div>
+
+            <!-- Navigation buttons -->
+            <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+            <a class="next" onclick="changeSlide(1)">&#10095;</a>
+        </div>
+
+        <!-- Dots for slide indicators -->
+        <div class="dots">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+    </section>
+
+    <script src="action.js"></script> <!-- Corrected script reference -->
+</body>
+</html>

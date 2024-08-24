@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
+    <title>Admin Settings</title>
     <style>
         /* Global Styles */
         * {
@@ -19,7 +19,7 @@
 
         /* Navbar Styles */
         .navbar {
-            background-color: #2453EF;
+            background-color: #C9961F;
             padding: 10px;
             display: flex;
             justify-content: space-between;
@@ -80,17 +80,7 @@
         }
         
         .btn-submit:hover {
-            background-color: #0F3CCF;
-        }
-        
-        /* Link Styles */
-        a {
-            text-decoration: none;
-            color: #337ab7;
-        }
-        
-        a:hover {
-            color: #23527c;
+            background-color: #1E3EDD;
         }
     </style>
 </head>
@@ -99,25 +89,32 @@
         <h1>Admin Panel</h1>
         <ul>
             <li><a href="dashboard.php">Dashboard</a></li>
-            <li><a href="view_users">Users</a></li>
+            <li><a href="users.php">Users</a></li>
             <li><a href="settings.php">Settings</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </div>
 
     <div class="container">
-        <h2>Admin Login</h2>
-        <form action="check_login.php" method="post">
+        <h2>Admin Settings</h2>
+        <form action="update_settings.php" method="post">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" class="form-control" required>
+            </div>
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="password">Password:</label>
+                <label for="password">New Password:</label>
                 <input type="password" id="password" name="password" class="form-control" required>
             </div>
-            <input type="submit" name="submit" value="Login" class="btn-submit">
-            <p><a href="register.php">Create an admin account</a></p>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" id="confirm-password" name="confirm-password" class="form-control" required>
+            </div>
+            <input type="submit" name="submit" value="Update Settings" class="btn-submit">
         </form>
     </div>
 </body>

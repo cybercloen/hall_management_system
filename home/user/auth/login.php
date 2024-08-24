@@ -19,15 +19,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Login successful, start session and redirect to dashboard
             $_SESSION["user_id"] = $user_data["id"];
             $_SESSION["email"] = $email;
-            header("Location: dashboard.php");
+            header("Location: ../dashboard.php");
             exit;
         } else {
-            $error = "Invalid email or password";
+       <script>
+    var error = "Invalid email or password";
+    alert(error);
+</script>
+
+            header("Location: login.html");
         }
     } else {
-            $error = "Invalid email or password";
+          <script>
+    var error = "Invalid email or password";
+    alert(error);
+</script>
+
+            header("Location: login.html");
+        }
     }
-}
 
 $conn->close();
 ?>
