@@ -5,6 +5,10 @@ require_once 'db.php';
 $sql = "SELECT * FROM halls";
 $result = mysqli_query($conn, $sql);
 
+// Assuming $hall is the array you're working with
+$status = isset($hall['status']) ? $hall['status'] : 'N/A'; // Default to 'N/A' if 'status' doesn't exist
+
+
 // Check if there are any halls
 if (mysqli_num_rows($result) > 0) {
     ?>
@@ -13,13 +17,14 @@ if (mysqli_num_rows($result) > 0) {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f0f4ff; /* Light background */
         }
         
         .container {
             max-width: 800px;
             margin: 40px auto;
             padding: 20px;
-            background-color: #f9f9f9;
+            background-color: #ffffff; /* White background for the container */
             border: 1px solid #ddd;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
@@ -27,7 +32,7 @@ if (mysqli_num_rows($result) > 0) {
         h1 {
             margin-top: 0;
             font-weight: bold;
-            color: #333;
+            color: #007BFF; /* Primary blue color */
         }
         
         table {
@@ -42,7 +47,8 @@ if (mysqli_num_rows($result) > 0) {
         }
         
         th {
-            background-color: #f0f0f0;
+            background-color: #e7f1ff; /* Light blue background for headers */
+            color: #007BFF; /* Blue text for headers */
         }
         
         .actions {
@@ -52,11 +58,17 @@ if (mysqli_num_rows($result) > 0) {
         .actions a {
             margin: 0 10px;
             text-decoration: none;
-            color: #337ab7;
+            color: #007BFF; /* Blue color for action links */
         }
         
         .actions a:hover {
-            color: #23527c;
+            color: #0056b3; /* Darker blue on hover */
+        }
+        
+        .hall-image {
+            width: 100px; /* Adjust the size as needed */
+            height: auto;
+            border-radius: 4px;
         }
     </style>
     <div class="container">
@@ -68,6 +80,7 @@ if (mysqli_num_rows($result) > 0) {
                 <th>Capacity</th>
                 <th>Location</th>
                 <th>Status</th>
+                <th>Images</th>
                 <th>Actions</th>
             </tr>
             <?php while ($hall = mysqli_fetch_assoc($result)) { ?>
@@ -77,6 +90,10 @@ if (mysqli_num_rows($result) > 0) {
                 <td><?= htmlspecialchars($hall['capacity']); ?></td>
                 <td><?= htmlspecialchars($hall['location']); ?></td>
                 <td><?= htmlspecialchars($hall['status']); ?></td>
+                <td>
+                    <img src="<?= htmlspecialchars($hall['interior_image_url']); ?>" alt="Interior Image" class="hall-image">
+                    <img src="<?= htmlspecialchars($hall['exterior_image_url']); ?>" alt="Exterior Image" class="hall-image">
+                </td>
                 <td class="actions">
                     <a href="edit_hall.php?id=<?= $hall['id']; ?>">Edit</a>
                     <a href="delete_hall.php?id=<?= $hall['id']; ?>">Delete</a>
@@ -94,13 +111,14 @@ if (mysqli_num_rows($result) > 0) {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f0f4ff; /* Light background */
         }
         
         .container {
             max-width: 800px;
             margin: 40px auto;
             padding: 20px;
-            background-color: #f9f9f9;
+            background-color: #ffffff; /* White background for the container */
             border: 1px solid #ddd;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }

@@ -85,6 +85,24 @@
     </style>
 </head>
 <body>
+     <div class="sidebar">
+        <h2>Admin Menu</h2>
+      <div class="sidebar">
+        <h2>Admin Menu</h2>
+        <a href="./add_hall.php">Add Hall</a>
+        <a href="./view_hall.php">Manage Halls</a>
+        <a href="./add_event.php">Add Event</a>
+        <a href="./manage-events.php">Manage Events</a>
+        <a href="./view_bookings.php">View Bookings</a>
+        <a href="./view_hall_bookings.php">View Hall Bookings</a>
+        <a href="./view_event_bookings.php">View Event Bookings</a>
+        <a href="./view_hall.php">View Hall Availability</a>
+        <a href="./view_hall_statistics.php">View Hall Statistics</a>
+        <a href="./view_bookings.php">All Bookings</a>
+        <a href="./view_users.php">View All Users</a>
+        <a href="./logout.php">Logout</a>
+    </div>
+    </div>
     <div class="navbar">
         <h1>Admin Panel</h1>
         <ul>

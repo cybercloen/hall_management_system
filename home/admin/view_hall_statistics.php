@@ -8,7 +8,8 @@ if (!isset($_SESSION['admin_logged_in'])) {
 // Include database connection
 require_once 'db.php';
 
-$query = "SELECT * FROM users"; // Adjust query as necessary
+// Example query for statistics (adjust as necessary)
+$query = "SELECT hall_id, COUNT(*) as total_bookings FROM halls GROUP BY hall_id";
 $result = mysqli_query($conn, $query);
 ?>
 
@@ -17,7 +18,7 @@ $result = mysqli_query($conn, $query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View All Users</title>
+    <title>View Hall Statistics</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         body {
@@ -91,15 +92,6 @@ $result = mysqli_query($conn, $query);
         tr:hover {
             background-color: #f1f1f1; /* Light grey on row hover */
         }
-
-        a.delete {
-            color: #dc3545; /* Bootstrap danger color */
-            text-decoration: none;
-        }
-
-        a.delete:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
@@ -116,23 +108,20 @@ $result = mysqli_query($conn, $query);
         <a href="./view_hall_statistics.php">View Hall Statistics</a>
         <a href="./view_bookings.php">All Bookings</a>
         <a href="./view_users.php">View All Users</a>
+        <a href="./#">Calender</a>
         <a href="./logout.php">Logout</a>
     </div>
     <div class="container">
-        <h1>View All Users</h1>
+        <h1>Hall Statistics</h1>
         <table>
             <tr>
-                <th>User ID</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Action</th>
+                <th>Hall ID</th>
+                <th>Total Bookings</th>
             </tr>
             <?php while ($row = mysqli_fetch_assoc($result)) { ?>
             <tr>
-                <td><?php echo htmlspecialchars($row['id']); ?></td>
-                <td><?php echo htmlspecialchars($row['username']); ?></td>
-                <td><?php echo htmlspecialchars($row['email']); ?></td>
-                <td><a class="delete" href="delete_user.php?id=<?php echo $row['id']; ?>">Delete</a></td>
+                <td><?php echo htmlspecialchars($row['hall_id']); ?></td>
+                <td><?php echo htmlspecialchars($row['total_bookings']); ?></td>
             </tr>
             <?php } ?>
         </table>
