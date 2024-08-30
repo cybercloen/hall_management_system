@@ -1,139 +1,199 @@
 <?php
+// Start session
+session_start();
+
+// Check if user is logged in as admin
+// if (!isset($_SESSION["admin_id"])) {
+//     header("Location: index.php");
+//     exit;
+// }
+
+// Connect to database
 require_once 'db.php';
 
-// Retrieve all halls from the database
-$sql = "SELECT * FROM halls";
-$result = mysqli_query($conn, $sql);
+// Check for database connection errors
+if (!$conn) {
+    die("Database connection error: " . mysqli_connect_error());
+}
 
-// Assuming $hall is the array you're working with
-// $status = isset($hall['status']) ? $hall['status'] : 'N/A'; // Default to 'N/A' if 'status' doesn't exist
+// Prepare and execute the SQL statement to get all halls
+$stmt = $conn->prepare("SELECT * FROM halls");
+$stmt->execute();
+$result = $stmt->get_result();
 
+// Display admin dashboard
+?>
 
-// Check if there are any halls
-if (mysqli_num_rows($result) > 0) {
-    ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
             margin: 0;
-            padding: 0;
-            background-color: #f0f4ff; /* Light background */
+            display: flex;
         }
-        
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-            background-color: #ffffff; /* White background for the container */
-            border: 1px solid #ddd;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        
+
         h1 {
-            margin-top: 0;
-            font-weight: bold;
-            color: #007BFF; /* Primary blue color */
+            text-align: center;
+            color: #00796b;
+            flex: 1; /* Allow header to take available space */
         }
-        
+
+        .sidebar {
+            width: 200px; 
+            background-color: #4a90e2;
+            padding: 15px; 
+            height: 100vh;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h2 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 15px; 
+            font-size: 1.5em; 
+        }
+
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            padding: 8px; 
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-weight: 600;
+            font-size: 0.9em; 
+        }
+
+        .sidebar a:hover {
+            background-color: #357ab8;
+        }
+
+        .main-content {
+            margin-left: 220px; /* Space for sidebar */
+            padding: 20px;
+            flex-grow: 1; /* Allow main content to take remaining space */
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
         }
-        
+
         th, td {
-            padding: 10px;
+            padding: 15px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
-        
+
         th {
-            background-color: #e7f1ff; /* Light blue background for headers */
-            color: #007BFF; /* Blue text for headers */
+            background-color: #007bff;
+            color: white;
         }
-        
-        .actions {
-            text-align: center;
+
+        .status {
+            font-weight: bold;
         }
-        
-        .actions a {
-            margin: 0 10px;
-            text-decoration: none;
-            color: #007BFF; /* Blue color for action links */
+
+        .available {
+            color: green;
         }
-        
-        .actions a:hover {
-            color: #0056b3; /* Darker blue on hover */
+
+        .booked {
+            color: red;
         }
-        
+
+        .maintenance {
+            color: orange;
+        }
+
         .hall-image {
-            width: 100px; /* Adjust the size as needed */
-            height: auto;
-            border-radius: 4px;
+            width: 100px; /* Adjust as needed */
+            height: auto; /* Maintain aspect ratio */
+            margin-right: 10px; /* Space between images */
         }
     </style>
-    <div class="container">
-        <h1>Available Halls</h1>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Admin Menu</h2>
+        <a href="./add_hall.php">Add Hall</a>
+        <a href="./view_hall.php">Manage Halls</a>
+        <a href="./add_event.php">Add Event</a>
+        <a href="./manage-events.php">Manage Events</a>
+        <a href="./view_bookings.php">View Bookings</a>
+        <a href="./view_hall_bookings.php">View Hall Bookings</a>
+        <a href="./view_hall.php">View Hall Availability</a>
+        <a href="./view_hall_statistics.php">View Hall Statistics</a>
+        <a href="./view_bookings.php">All Bookings</a>
+        <a href="./view_users.php">View All Users</a>
+        <a href="./settings.php">Settings</a>
+        <a href="./logout.php">Logout</a>
+    </div>
+
+    <div class="main-content">
+        <h1>Admin Dashboard</h1>
         <table>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Capacity</th>
                 <th>Location</th>
+                <th>Capacity</th>
+                <th>Description</th>
                 <th>Status</th>
-                <th>Images</th>
-                <th>Actions</th>
+                <th>Interior Image</th>
+                <th>Exterior Image</th>
+                <th>Action</th>
             </tr>
-            <?php while ($hall = mysqli_fetch_assoc($result)) { ?>
-            <tr>
-                <td><?= htmlspecialchars($hall['id']); ?></td>
-                <td><?= htmlspecialchars($hall['name']); ?></td>
-                <td><?= htmlspecialchars($hall['capacity']); ?></td>
-                <td><?= htmlspecialchars($hall['location']); ?></td>
-                <td><?= htmlspecialchars($hall['status']); ?></td>
-                <td>
-                    <img src="<?= htmlspecialchars($hall['interior_image_url']); ?>" alt="Interior Image" class="hall-image">
-                    <img src="<?= htmlspecialchars($hall['exterior_image_url']); ?>" alt="Exterior Image" class="hall-image">
-                </td>
-                <td class="actions">
-                    <a href="edit_hall.php?id=<?= $hall['id']; ?>">Edit</a>
-                    <a href="delete_hall.php?id=<?= $hall['id']; ?>">Delete</a>
-                    <a href="assign_hall.php?id=<?= $hall['id']; ?>">Assign</a>
-                </td>
-            </tr>
+            <?php while ($hall = $result->fetch_assoc()) { ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($hall["id"]); ?></td>
+                    <td><?php echo htmlspecialchars($hall["name"]); ?></td>
+                    <td><?php echo htmlspecialchars($hall["location"]); ?></td>
+                    <td><?php echo htmlspecialchars($hall["capacity"]); ?></td>
+                    <td><?php echo htmlspecialchars($hall["description"]); ?></td>
+                    <td class="status <?php echo htmlspecialchars($hall["status"]); ?>">
+                        <?php echo htmlspecialchars(ucfirst($hall["status"])); ?>
+                    </td>
+                    <td>
+                        <img src="<?php echo htmlspecialchars($hall["interior_image_url"]); ?>" alt="Interior Image" class="hall-image">
+                    </td>
+                    <td>
+                        <img src="<?php echo htmlspecialchars($hall["exterior_image_url"]); ?>" alt="Exterior Image" class="hall-image">
+                    </td>
+                    <td>
+                        <form method="POST" action="status_update.php">
+                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($hall["id"]); ?>">
+                            <select name="status">
+                                <option value="available" <?php echo $hall["status"] == 'available' ? 'selected' : ''; ?>>Available</option>
+                                <option value="booked" <?php echo $hall["status"] == 'booked' ? 'selected' : ''; ?>>Booked</option>
+                                <option value="under maintenance" <?php echo $hall["status"] == 'under maintenance' ? 'selected' : ''; ?>>Under Maintenance</option>
+                            </select>
+                            <button type="submit">Update</button>
+                        </form>
+                    </td>
+                </tr>
             <?php } ?>
         </table>
     </div>
-    <?php
-} else {
-    ?>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f4ff; /* Light background */
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-            background-color: #ffffff; /* White background for the container */
-            border: 1px solid #ddd;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        p {
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-            color: #666;
-        }
-    </style>
-    <div class="container">
-        <p>No halls found.</p>
-    </div>
-    <?php
-}
-mysqli_close($conn);
+</body>
+</html>
+
+<?php
+// Close the statement and connection
+$stmt->close();
+$conn->close();
 ?>

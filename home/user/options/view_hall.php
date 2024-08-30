@@ -97,7 +97,7 @@ function displayHalls($result) {
     <?php
 }
 
-function displayNoHalls() {
+function displayHalls($result) {
     ?>
     <style>
         /* Global Styles */
@@ -117,19 +117,82 @@ function displayNoHalls() {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        p {
-            margin: 0;
-            padding: 20px;
+        h1 {
+            margin-top: 0;
+            font-weight: bold;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        .actions {
             text-align: center;
-            color: #666;
+        }
+
+        .actions a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #337ab7;
+        }
+
+        .actions a:hover {
+            color: #23527c;
+        }
+
+        .reserve-button, .book-button {
+            padding: 5px 10px;
+            color: white;
+            background-color: #28a745; /* Green */
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .reserve-button:hover, .book-button:hover {
+            background-color: #218838; /* Darker Green */
         }
     </style>
     <div class="container">
-        <p>No halls found.</p>
+        <h1>Available Halls</h1>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Capacity</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            <?php while ($hall = mysqli_fetch_assoc($result)) { ?>
+                <tr>
+                    <td><?= htmlspecialchars($hall['id']); ?></td>
+                    <td><?= htmlspecialchars($hall['name']); ?></td>
+                    <td><?= htmlspecialchars($hall['capacity']); ?></td>
+                    <td><?= htmlspecialchars($hall['location']); ?></td>
+                    <td><?= htmlspecialchars($hall['status']); ?></td>
+                    <td class="actions">
+                        <a href="reserve_hall.php?id=<?= $hall['id']; ?>" class="reserve-button">Reserve Now</a>
+                        <a href="book_hall.php?id=<?= $hall['id']; ?>" class="book-button">Book Now</a>
+                    </td>
+                </tr>
+            <?php } ?>
+        </table>
     </div>
     <?php
 }
 
-mysqli_close($conn);
-?>
 

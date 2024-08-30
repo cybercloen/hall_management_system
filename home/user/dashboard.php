@@ -21,22 +21,6 @@ $stmt = $conn->prepare("SELECT * FROM halls");
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Assuming $hall is the array you're working with
-$Id = isset($halls['id']) ? $halls['id'] : 'N/A'; // Default to 'N/A' if 'hall_id' doesn't exist
-
-
-
-// Assuming $someString is the variable being passed
-$someString = isset($hall['someKey']) ? $hall['someKey'] : ''; // Default to an empty string if not set
-$safeString = htmlspecialchars($someString);
-
-
-
-// Check for SQL query errors
-if (!$result) {
-    die("SQL error: " . mysqli_error($conn));
-}
-
 // Display user dashboard
 ?>
 
@@ -97,6 +81,12 @@ if (!$result) {
             flex-grow: 1;
         }
 
+        .welcome-text {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #00796b; /* Darker teal for welcome text */
+        }
+
         .scroll-container {
             display: flex;
             flex-wrap: wrap;
@@ -106,11 +96,14 @@ if (!$result) {
 
         .hall-card {
             background-color: #ffffff; /* White background for cards */
-            border-radius: 10px;
+            border-radius: 15px; /* Rounded borders */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            width: 300px;
+            width: 250px; /* Adjusted width for square aspect */
+            height: 250px; /* Fixed height for square */
             transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
         }
 
         .hall-card:hover {
@@ -120,21 +113,23 @@ if (!$result) {
 
         .hall-card img {
             width: 100%;
-            height: 200px; /* Fixed height for images */
+            height: 150px; /* Fixed height for images */
             object-fit: cover; /* Ensures images cover the area */
         }
 
         .hall-info {
-            padding: 15px;
+            padding: 10px;
+            flex-grow: 1; /* Allow info section to take remaining space */
         }
 
         .hall-info h2 {
             color: #00796b; /* Darker teal for hall names */
-            margin: 0 0 10px;
+            margin: 0 0 5px;
+            font-size: 1.1em; /* Slightly smaller */
         }
 
         .hall-info p {
-            margin: 5px 0;
+            margin: 3px 0;
             line-height: 1.5; /* Improved spacing for readability */
         }
 
@@ -147,6 +142,7 @@ if (!$result) {
         @media (max-width: 768px) {
             .hall-card {
                 width: 90%; /* Full width on smaller screens */
+                height: auto; /* Adjust height */
             }
             
             .sidebar {
@@ -173,19 +169,23 @@ if (!$result) {
     
     <div class="main-content">
         <h1>All Halls</h1>
-       <div class="scroll-container">
-    <?php while ($hall = $result->fetch_assoc()) { ?>
-        <div class="hall-card">
-            <img src="hall_images/<?php echo htmlspecialchars($hall["id"]); ?>.jpg" alt="<?php echo htmlspecialchars($hall["name"]); ?>">
-            <div class="hall-info">
-                <h2><?php echo htmlspecialchars($hall["name"]); ?></h2>
-                <p>Location: <?php echo htmlspecialchars($hall["location"]); ?></p>
-                <p class="capacity">Capacity: <?php echo htmlspecialchars($hall["capacity"]); ?></p>
-                <p>Description: <?php echo htmlspecialchars($hall["description"]); ?></p>
-            </div>
+        <div class="welcome-text">
+            Welcome, <?php echo htmlspecialchars($_SESSION["username"]); ?>! Here are the available halls:
         </div>
-    <?php } ?>
-</div>
+        <div class="scroll-container">
+            <?php while ($hall = $result->fetch_assoc()) { ?>
+                <div class="hall-card">
+                    <img src="hall_images/<?php echo htmlspecialchars($hall["id"]); ?>.jpg" alt="<?php echo htmlspecialchars($hall["name"]); ?>">
+                    <div class="hall-info">
+                        <h2><?php echo htmlspecialchars($hall["name"]); ?></h2>
+                        <p>Location: <?php echo htmlspecialchars($hall["location"]); ?></p>
+                        <p class="capacity">Capacity: <?php echo htmlspecialchars($hall["capacity"]); ?></p>
+                        <p>Description: <?php echo htmlspecialchars($hall["description"]); ?></p>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
 
 </body>
 </html>
