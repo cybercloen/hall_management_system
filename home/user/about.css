@@ -55,3 +55,30 @@ footer {
     bottom: 0;
     width: 100%;
 }
+ul{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ul li{
+    list-style: none;
+    margin-left: 82px;
+    margin-top: 27px;
+    font-size: 14px;
+    padding-left: 20px;
+    margin-left: 40px;
+}
+
+ul li a{
+    text-decoration: none;
+    color: black;
+    font-family: Arial;
+    font-weight: bold;
+    transform: 0.4s ease-in-out;
+}
+
+ul li a:hover{
+    color: red;
+}

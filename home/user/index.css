@@ -1,29 +1,32 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
 
-.main{
+.main {
     width: 100%;
-    background-image:  url(background.jpg);
+    background-image: url(background.jpg);
     background-position: center;
     background-size: cover;
     height: 100vh;
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
 }
 
-.navbar{
+.navbar {
     width: 1200px;
     height: 75px;
     margin: auto;
 }
 
-.icon{
+.icon {
     width: 200px;
     float: left;
     height: 70px;
 }
 
-.logo{
+.logo {
     color: #ff7200;
     font-size: 40px;
     font-family: Arial;
@@ -32,117 +35,80 @@
     padding-top: 10px;
 }
 
-.menu{
+.menu {
     width: 400px;
     float: left;
     height: 70px;
 }
 
-ul{
+ul {
     list-style: none;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-ul li{
+ul li {
     list-style: none;
-    margin-left: 82px;
-    margin-top: 27px;
+    margin-left: 40px; /* Adjusted for uniform spacing */
     font-size: 14px;
     padding-left: 20px;
-    margin-left: 40px;
 }
 
-ul li a{
+ul li a {
     text-decoration: none;
     color: black;
     font-family: Arial;
     font-weight: bold;
-    transform: 0.4s ease-in-out;
+    transition: color 0.4s ease-in-out;
 }
 
-ul li a:hover{
+ul li a:hover {
     color: red;
 }
 
-.search{
+.search {
     width: 330px;
-    float: left;
-    margin-left: 270px;
+    margin: auto; /* Center the search container */
 }
 
-.srch{
+.srch {
     font-family: 'Times New Roman';
-    width: 200px;
+    width: calc(100% - 100px); /* Adjust width to fit */
     height: 40px;
     background: transparent;
     border: 1px solid #ff7200;
-    margin-top: 13px;
     color: #fff;
-    border-right: none;
     font-size: 15px;
-    float: left;
-    padding: 15px;
-    border-bottom: 5px;
-    border-top-left-radius: 5px;
+    padding: 10px; /* Adjust padding for better appearance */
+    border-radius: 5px 0 0 5px; /* Rounded left corners */
+    outline: none; /* Remove outline */
 }
 
-.btn{
+.btn {
     width: 100px;
     height: 40px;
     background: #ff7200;
-    border: 2px solid #ff7200;
-    margin-top: 13px;
+    border: none;
     color: #fff;
     font-size: 15px;
-    border-bottom-right-radius: 5px;
-    border-top-right-radius: 5px;
+    border-radius: 0 5px 5px 0; /* Rounded right corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth background transition */
 }
 
-.button2{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    padding: 10px 20px;
-    height: 100%;
-    width: 100%;
-    border: none;
-    outline: none;
-    border-radius: 2px;
-    background: #ff7200;
+.btn:hover {
+    background: #e65c00; /* Darker shade on hover */
 }
 
-.button3{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    padding: 10px 20px;
-    height: 100%;
-    width: 100%;
-    border: none;
-    border-radius: 2px;
-    background-color: #ff7200;
-}
-
-.btn:focus{
-    outline: none; 
-}
-
-.srch:focus{
-    outline: none;
-}
-
-.content{
+.content {
     width: 1200px;
     height: auto;
     margin: auto;
     position: relative;
 }
 
-.content .par{
+.content .par {
     padding-left: 20px;
     padding-bottom: 25px;
     font-family: Arial;
@@ -150,7 +116,7 @@ ul li a:hover{
     line-height: 30px;
 }
 
-.content h1{
+.content h1 {
     font-family: 'Times New Roman';
     font-size: 50px;
     padding-left: 20px;
@@ -158,7 +124,7 @@ ul li a:hover{
     letter-spacing: 2px;
 }
 
-.content .cn{
+.content .cn {
     width: 160px;
     height: 40px;
     background: #ff7200;
@@ -170,23 +136,23 @@ ul li a:hover{
     transition: .4s ease;
 }
 
-.content .cn a{
+.content .cn a {
     text-decoration: none;
     color: black;
 }
 
-.cn:hover{
+.cn:hover {
     background: #fff;
 }
 
-.content span{
+.content span {
     color: #ff7200;
     font-size: 60px;
 }
 
-.form{
+.form {
     width: 250px;
-    height: 380px;
+    height: auto;
     background: linear-gradient(to top, rgba(0,0,0,0.8)50%,rgba(0,0,0,0.8)50%);
     position: absolute;
     top: 20px;
@@ -195,7 +161,7 @@ ul li a:hover{
     padding: 25px;
 }
 
-.form h2{
+.form h2 {
     width: 220px;
     font-family: sans-serif;
     text-align: center;
@@ -207,7 +173,7 @@ ul li a:hover{
     padding: 8px;
 }
 
-.form input{
+.form input {
     width: 240px;
     height: 35px;
     background: transparent;
@@ -222,16 +188,16 @@ ul li a:hover{
     font-family: sans-serif;
 }
 
-.form input:focus{
+.form input:focus {
     outline: none;
 }
 
-::placeholder{
+::placeholder {
     color: #fff;
     font-family: Arial;
 }
 
-.btnn{
+.btnn {
     width: 240px;
     height: 40px;
     background: #ff7200;
@@ -243,18 +209,18 @@ ul li a:hover{
     color: #fff;
 }
 
-.btnn:hover{
+.btnn:hover {
     background: #fff;
     color: #ff7200;
 }
 
-.btnn a{
+.btnn a {
     text-decoration: none;
     color: #000;
     font-weight: bold;
 }
 
-.form .link{
+.form .link {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 17px;
     padding: 20px;
@@ -262,186 +228,114 @@ ul li a:hover{
     color: #fff;
 }
 
-.form .link a{
+.form .link a {
     text-decoration: none;
     color: #ff7200;
 }
 
-.liw{
+.liw {
     padding-top: 15px;
     padding-bottom: 10px;
     text-align: center;
 }
+
 /* Mobile devices (max-width: 768px) */
-
 @media only screen and (max-width: 768px) {
-
     .main {
-  
-      height: auto;
-  
+        height: auto;
     }
-  
+
     .navbar {
-  
-      width: 100%;
-  
-      height: 50px;
-  
+        width: 100%;
+        height: 50px;
     }
-  
+
     .icon {
-  
-      width: 100px;
-  
-      height: 40px;
-  
+        width: 100px;
+        height: 40px;
     }
-  
+
     .logo {
-  
-      font-size: 24px;
-  
+        font-size: 24px;
     }
-  
+
     .menu {
-  
-      width: 100%;
-  
-      height: 40px;
-  
+        width: 100%;
+        height: 40px;
     }
-  
+
     ul {
-  
-      flex-direction: column;
-  
+        flex-direction: column;
     }
-  
+
     ul li {
-  
-      margin-left: 0;
-  
-      margin-top: 10px;
-  
+        margin-left: 0;
+        margin-top: 10px;
     }
-  
+
     .search {
-  
-      width: 100%;
-  
-      margin-left: 0;
-  
+        width: 100%;
+        margin-left: 0;
     }
-  
+
     .srch {
-  
-      width: 100%;
-  
-      height: 30px;
-  
+        width: 100%;
+        height: 30px;
     }
-  
+
     .btn {
-  
-      width: 100%;
-  
-      height: 30px;
-  
+        width: 100%;
+        height: 30px;
     }
-  
+
     .content {
-  
-      width: 100%;
-  
-      height: auto;
-  
+        width: 100%;
+        height: auto;
     }
-  
+
     .content h1 {
-  
-      font-size: 36px;
-  
+        font-size: 36px;
     }
-  
+
     .content .par {
-  
-      padding-left: 10px;
-  
-      padding-bottom: 15px;
-  
+        padding-left: 10px;
+        padding-bottom: 15px;
     }
-  
+
     .content .cn {
-  
-      width: 100%;
-  
-      height: 30px;
-  
+        width: 100%;
+        height: 30px;
     }
-  
+
     .form {
-  
-      width: 100%;
-  
-      height: auto;
-  
-      position: relative;
-  
-      top: 0;
-  
-      left: 0;
-  
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 0;
+        left: 0;
     }
-  
+
     .form h2 {
-  
-      width: 100%;
-  
-      font-size: 18px;
-  
+        width: 100%;
+        font-size: 18px;
     }
-  
+
     .form input {
-  
-      width: 100%;
-  
-      height: 25px;
-  
+        width: 100%;
+        height: 25px;
     }
-  
+
     .btnn {
-  
-      width: 100%;
-  
-      height: 30px;
-  
+        width: 100%;
+        height: 30px;
     }
-  
-  }
-  .form-group input[type="search"],
-.form-group select,
-.form-group button {
-    border-radius: 25px; /* Adjust the value for more or less rounding */
-    padding: 10px 15px; /* Add some padding for better appearance */
-    border: 1px solid #ccc; /* Light border */
-    outline: none; /* Remove default outline */
-    transition: border-color 0.3s; /* Smooth transition for border color */
 }
-
-.form-group input[type="search"]:focus,
-.form-group select:focus,
-.form-group button:hover {
-    border-color: #337ab7; /* Change border color on focus/hover */
-}
-
-.form-group button {
-    background-color: #337ab7; /* Button background color */
-    color: white; /* Button text color */
-    cursor: pointer; /* Change cursor on hover */
-    border: none; /* Remove default button border */
-}
-
-.form-group button:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
 }

@@ -3,27 +3,14 @@ require_once 'db.php';
 
 // Registration form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = test_input($_POST["username"]);
-    $email = test_input($_POST["email"]);
-    $password = test_input($_POST["password"]);
-    $confirm_password = test_input($_POST["confirm_password"]);
-    $first_name = test_input($_POST["first_name"]);
-    $last_name = test_input($_POST["last_name"]);
-    $phone_number = test_input($_POST["phone_number"]);
-    $address = test_input($_POST["address"]);
-
-
-
-    function test_input($data){
-        $data = trim($data);
-        $data = stripslahes($data);
-        $data = htmlspecialchar($data);
-        return $data;
-    }
-
-
-
-
+    $username = $_POST["username"];
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    $confirm_password = $_POST["confirm_password"];
+    $first_name = $_POST["first_name"];
+    $last_name = $_POST["last_name"];
+    $phone_number = $_POST["phone_number"];
+    $address = $_POST["address"];
 
     // Validate input
     $errors = [];
@@ -46,12 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($last_name)) {
         $errors[] = "Please fill in the last name field.";
     }
-    if( !empty($phone_number) ) 
-        {
-            $pattern = '/^(?:\(\+?44\)\s?|\+?44 ?)?(?:0|\(0\))?\s?(?:(?:1\d{3}|7[1-9]\d{2}|20\s?[78])\s?\d\s?\d{2}[ -]?\d{3}|2\d{2}\s?\d{3}[ -]?\d{4})$/';
-            if(!preg_match($pattern, $phone_numner)){
-                $error[] = 'Please enter a valid phone number!';
-            }
+    if (empty($phone_number)) {
+        $errors[] = "Please fill in the phone number field.";
     }
     if (empty($address)) {
         $errors[] = "Please fill in the address field.";
@@ -60,23 +43,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (count($errors) > 0) {
         $error_message = implode("<br>", $errors);
     } else {
-        // Hash password
-        $password_hash = password_hash($password, PASSWORD_BCRYPT);
+        // Check if the email already exists
+        $check_email_query = "SELECT * FROM users WHERE email = ?";
+        $check_stmt = $conn->prepare($check_email_query);
+        $check_stmt->bind_param("s", $email);
+        $check_stmt->execute();
+        $check_result = $check_stmt->get_result();
 
-        // Insert user into database
-        $query = "INSERT INTO users (username, email, password, first_name, last_name, phone_number, address) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("sssssss", $username, $email, $password_hash, $first_name, $last_name, $phone_number, $address);
-        $stmt->execute();
-
-        // Check if user was inserted successfully
-        if ($stmt->affected_rows > 0) {
-            $success_message = "Registration successful! You can now log in.";
-            header('Location: login.php');
-            exit;
+        if ($check_result->num_rows > 0) {
+            $error_message = "Email is already in use. Please use a different email.";
         } else {
-            $error_message = "Registration failed. Please try again.";
+            // Hash password
+            $password_hash = password_hash($password, PASSWORD_BCRYPT);
+
+            // Insert user into database
+            $query = "INSERT INTO users (username, email, password, first_name, last_name, phone_number, address) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("sssssss", $username, $email, $password_hash, $first_name, $last_name, $phone_number, $address);
+            $stmt->execute();
+
+            // Check if user was inserted successfully
+            if ($stmt->affected_rows > 0) {
+                $success_message = "Registration successful! You can now log in.";
+                header('Location: login.html');
+                exit;
+            } else {
+                $error_message = "Registration failed. Please try again.";
+            }
         }
+        
+        // Close the check statement
+        $check_stmt->close();
     }
 }
 

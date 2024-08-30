@@ -6,7 +6,7 @@ $sql = "SELECT * FROM halls";
 $result = mysqli_query($conn, $sql);
 
 // Assuming $hall is the array you're working with
-$status = isset($hall['status']) ? $hall['status'] : 'N/A'; // Default to 'N/A' if 'status' doesn't exist
+// $status = isset($hall['status']) ? $hall['status'] : 'N/A'; // Default to 'N/A' if 'status' doesn't exist
 
 
 // Check if there are any halls

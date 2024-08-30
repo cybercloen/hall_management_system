@@ -1,17 +1,20 @@
-<!-- login.php -->
 <?php
 session_start();
-
 require_once 'db.php';
+
+// Initialize error message variable
+$error = '';
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    // Query to retrieve user data
-    $sql = "SELECT * FROM users WHERE email = '$email'";
-    $result = $conn->query($sql);
+    // Prepare the SQL statement to prevent SQL injection
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         $user_data = $result->fetch_assoc();
@@ -22,32 +25,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: ../dashboard.php");
             exit;
         } else {
-       <script>
-    var error = "Invalid email or password";
-    alert(error);
-</script>
-
-            header("Location: login.html");
-        }
+            $error = "Invalid email or password.";
+        }   
     } else {
-          <script>
-    var error = "Invalid email or password";
-    alert(error);
-</script>
-
-            header("Location: login.html");
-        }
+        $error = "Invalid email or password.";
     }
 
+    // Close the statement
+    $stmt->close();
+}
+
+// Close connection
 $conn->close();
 ?>
-
-<!-- Display error message if any -->
-<?php if (isset($error)) { ?>
-    <p style="color: red;"><?php echo $error; ?></p>
-<?php } ?>
-
-<!-- Redirect back to login form -->
-<form action="login.html" method="post">
-    <button type="submit">Back to login</button>
-</form>
