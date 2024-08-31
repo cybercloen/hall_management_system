@@ -4,20 +4,23 @@ session_start();
 // Include database connection
 require_once 'db.php'; // Ensure you include your database connection file
 
-// Uncomment the following lines if you want to check if the user is logged in
-// if (isset($_SESSION['user_login']) && $_SESSION['user_login'] == true) {
-//   $username = $_SESSION['username'];
-//   $id = $_SESSION['id']; // Updated to use 'id' instead of 'user_id'
+// Check if the user is logged in
+if (!isset($_SESSION['user_login']) || $_SESSION['user_login'] !== true) {
+    header('Location: login.php');
+    exit;
+}
+
+$username = $_SESSION['username'];
+$id = $_SESSION['id']; // Using 'id' from session
 
 // Prepare SQL statement to prevent SQL injection
 $query = "
     SELECT b.*, h.name 
     FROM bookings b 
     JOIN halls h ON b.hall_id = h.hall_id 
-    WHERE b.id = ?
-";
+    WHERE b.user_id = ?"; // Assuming 'user_id' is the column for user reference
 $stmt = mysqli_prepare($conn, $query);
-mysqli_stmt_bind_param($stmt, "i", $id); // Updated binding parameter to use 'id'
+mysqli_stmt_bind_param($stmt, "i", $id);
 mysqli_stmt_execute($stmt);
 
 // Get the result
@@ -121,7 +124,7 @@ $result = mysqli_stmt_get_result($stmt);
             <?php if (mysqli_num_rows($result) > 0) { ?>
                 <?php while ($row = mysqli_fetch_assoc($result)) { ?>
                     <tr>
-                        <td data-label="Hall Name"><?php echo htmlspecialchars($row['name']); ?></td> <!-- Changed to 'name' -->
+                        <td data-label="Hall Name"><?php echo htmlspecialchars($row['name']); ?></td>
                         <td data-label="Booking Date"><?php echo htmlspecialchars($row['booking_date']); ?></td>
                         <td data-label="Booking Time"><?php echo htmlspecialchars($row['booking_time']); ?></td>
                         <td data-label="Status"><?php echo htmlspecialchars($row['status']); ?></td>
@@ -146,11 +149,6 @@ $result = mysqli_stmt_get_result($stmt);
     mysqli_free_result($result);
     // Close the statement
     mysqli_stmt_close($stmt);
-    // } else {
-    //   header('Location: login.php');
-    //   exit;
-    // }
-
     // Close the database connection
     mysqli_close($conn);
     ?>

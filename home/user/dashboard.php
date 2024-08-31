@@ -174,8 +174,7 @@ $result = $stmt->get_result();
     <div class="sidebar">
         <h2>User Options</h2>
         <a href="dashboard.php">Dashboard</a>
-        <a href="./booking/view_bookings.php">My Bookings</a>
-        <a href="./profile/user_profile.php">Profile</a>
+        <a href="../profile/user_profile.php">Profile</a>
         <a href="#">Settings</a>
         <a href="./auth/logout.php">Logout</a>
         <!-- Add more links as needed -->

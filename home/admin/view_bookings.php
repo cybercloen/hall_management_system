@@ -4,104 +4,102 @@ session_start();
 // Include database connection
 require_once 'db.php'; // Ensure you include your database connection file
 
-if (isset($_SESSION['user_login']) && $_SESSION['user_login'] == true) {
-    $username = $_SESSION['username'];
+// Prepare SQL statement to get all bookings
+$query = "
+    SELECT b.*, h.name AS hall_name 
+    FROM bookings b 
+    JOIN halls h ON b.hall_id = h.hall_id
+";
+$stmt = mysqli_prepare($conn, $query);
+mysqli_stmt_execute($stmt);
 
-    // Prepare SQL statement to get all bookings
-    $query = "
-        SELECT b.*, h.hall_name 
-        FROM bookings b 
-        JOIN halls h ON b.hall_id = h.hall_id
-    ";
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_execute($stmt);
-    
-    // Get the result
-    $result = mysqli_stmt_get_result($stmt);
-    ?>
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>All Bookings</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                margin: 0;
-                padding: 20px;
-            }
+// Get the result
+$result = mysqli_stmt_get_result($stmt);
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Bookings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
 
-            h1 {
-                text-align: center;
-                color: #333;
-            }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
 
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin: 20px 0;
-                box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-            }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
 
-            th, td {
-                padding: 12px;
-                text-align: left;
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #00796b; /* Teal background for header */
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9; /* Light gray for even rows */
+        }
+
+        tr:hover {
+            background-color: #e0f2f1; /* Light teal on hover */
+        }
+
+        tr td {
+            border-bottom: 1px solid #ddd; /* Divider between rows */
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
             }
 
             th {
-                background-color: #00796b; /* Teal background for header */
-                color: white;
+                display: none; /* Hide headers on small screens */
+            }
+
+            tr {
+                margin-bottom: 15px;
+                border: 1px solid #ddd; /* Border around each booking */
+            }
+
+            td {
+                text-align: right;
+                position: relative;
+                padding-left: 50%; /* Space for labels */
+            }
+
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                width: 45%;
+                padding-left: 10px;
                 font-weight: bold;
+                text-align: left;
             }
+        }
 
-            tr:nth-child(even) {
-                background-color: #f9f9f9; /* Light gray for even rows */
-            }
-
-            tr:hover {
-                background-color: #e0f2f1; /* Light teal on hover */
-            }
-
-            tr td {
-                border-bottom: 1px solid #ddd; /* Divider between rows */
-            }
-
-            /* Responsive design */
-            @media (max-width: 600px) {
-                table, thead, tbody, th, td, tr {
-                    display: block;
-                }
-
-                th {
-                    display: none; /* Hide headers on small screens */
-                }
-
-                tr {
-                    margin-bottom: 15px;
-                    border: 1px solid #ddd; /* Border around each booking */
-                }
-
-                td {
-                    text-align: right;
-                    position: relative;
-                    padding-left: 50%; /* Space for labels */
-                }
-
-                td::before {
-                    content: attr(data-label);
-                    position: absolute;
-                    left: 10px;
-                    width: 45%;
-                    padding-left: 10px;
-                    font-weight: bold;
-                    text-align: left;
-                }
-            }
-     .sidebar {
+        .sidebar {
             width: 200px; 
-            background-color: #4a90e2;
+            background-color: #007BFF;
             padding: 15px; 
             height: 100vh;
             position: fixed;
@@ -133,27 +131,25 @@ if (isset($_SESSION['user_login']) && $_SESSION['user_login'] == true) {
         .sidebar a:hover {
             background-color: #357ab8;
         }
-        </style>
-    </head>
-    <body>
-     <div class="sidebar">
-        <h2>Admin Menu</h2>
-      <div class="sidebar">
+    </style>
+</head>
+<body>
+    <div class="sidebar">
         <h2>Admin Menu</h2>
         <a href="./add_hall.php">Add Hall</a>
         <a href="./view_hall.php">Manage Halls</a>
-        <a href="./add_event.php">Add Event</a>
-        <a href="./manage-events.php">Manage Events</a>
+        // <a href="./add_event.php">Add Event</a>
+        // <a href="./manage-events.php">Manage Events</a>
         <a href="./view_bookings.php">View Bookings</a>
-        <a href="./view_hall_bookings.php">View Hall Bookings</a>
+        // <a href="./view_hall_bookings.php">View Hall Bookings</a>
         <a href="./view_event_bookings.php">View Event Bookings</a>
         <a href="./view_hall.php">View Hall Availability</a>
         <a href="./view_hall_statistics.php">View Hall Statistics</a>
-        <a href="./view_bookings.php">All Bookings</a>
         <a href="./view_users.php">View All Users</a>
         <a href="./logout.php">Logout</a>
     </div>
-    </div>
+
+    <div style="margin-left: 220px;"> <!-- Adjust margin to accommodate sidebar -->
         <h1>All Bookings</h1>
         <table>
             <thead>
@@ -162,7 +158,7 @@ if (isset($_SESSION['user_login']) && $_SESSION['user_login'] == true) {
                     <th>Booking Date</th>
                     <th>Booking Time</th>
                     <th>Status</th>
-                    <th>Action</th> <!-- Added Action Column -->
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -194,13 +190,9 @@ if (isset($_SESSION['user_login']) && $_SESSION['user_login'] == true) {
         mysqli_free_result($result);
         // Close the statement
         mysqli_stmt_close($stmt);
-    } else {
-        header('Location: login.php');
-        exit;
-    }
-
-    // Close the database connection
-    mysqli_close($conn);
-    ?>
-    </body>
-    </html>
+        // Close the database connection if needed
+        mysqli_close($conn);
+        ?>
+    </div>
+</body>
+</html>

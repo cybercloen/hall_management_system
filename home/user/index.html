@@ -49,22 +49,23 @@
 
     <section class="slideshow">
         <div class="slideshow-container">
-            <!-- Slide 1 -->
+            <!-- Slide 1 - shows
             <div class="slide fade">
                 <img src="images/slide1.jpg" alt="Hall 1" class="slide-image">
                 <div class="caption">Hall 1 - Spacious Conference Room</div>
             </div>
-            <!-- Slide 2 -->
+    
             <div class="slide fade">
                 <img src="images/slide2.jpg" alt="Hall 2" class="slide-image">
                 <div class="caption">Hall 2 - Elegant Banquet Hall</div>
             </div>
-            <!-- Slide 3 -->
+
             <div class="slide fade">
                 <img src="images/slide3.jpg" alt="Hall 3" class="slide-image">
                 <div class="caption">Hall 3 - Modern Meeting Room</div>
             </div>
 
+            >
             <!-- Navigation buttons -->
             <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
             <a class="next" onclick="changeSlide(1)">&#10095;</a>
@@ -81,7 +82,32 @@
     <script src="action.js"></script> <!-- Corrected script reference -->
     
     <footer>
-        <p>&copy; 2024 Hall Booking System. All rights reserved.</p>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Your go-to platform for booking the best halls for any occasion. We ensure a seamless experience from booking to event completion.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="about.php">About</a></li>
+                    <li><a href="services.php">Services</a></li>
+                    <li><a href="contact.php">Contact</a></li>
+                    <li><a href="login.php">Login</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: info@hallmanagement.com</p>
+                <p>Phone: +123 456 7890</p>
+                <p>Address: 123 Hall St, City, Country</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Hall Management System. All rights reserved.</p>
+        </div>
     </footer>
+    
 </body>
 </html>
