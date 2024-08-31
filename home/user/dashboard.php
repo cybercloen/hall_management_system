@@ -100,7 +100,7 @@ $result = $stmt->get_result();
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             width: 250px; /* Adjusted width for square aspect */
-            height: 250px; /* Fixed height for square */
+            height: 300px; /* Increased height for better layout */
             transition: transform 0.3s, box-shadow 0.3s;
             display: flex;
             flex-direction: column;
@@ -138,6 +138,20 @@ $result = $stmt->get_result();
             color: #d32f2f; /* Red for capacity */
         }
 
+        .book-button {
+            background-color: #007bff; /* Blue button */
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .book-button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
         /* Responsive design adjustments */
         @media (max-width: 768px) {
             .hall-card {
@@ -170,7 +184,7 @@ $result = $stmt->get_result();
     <div class="main-content">
         <h1>All Halls</h1>
         <div class="welcome-text">
-            Welcome, <?php echo htmlspecialchars($_SESSION["username"]); ?>! Here are the available halls:
+            Welcome, Here are the available halls:
         </div>
         <div class="scroll-container">
             <?php while ($hall = $result->fetch_assoc()) { ?>
@@ -181,17 +195,27 @@ $result = $stmt->get_result();
                         <p>Location: <?php echo htmlspecialchars($hall["location"]); ?></p>
                         <p class="capacity">Capacity: <?php echo htmlspecialchars($hall["capacity"]); ?></p>
                         <p>Description: <?php echo htmlspecialchars($hall["description"]); ?></p>
+                        <p>Status: <?php echo htmlspecialchars($hall["status"]); ?></p> <!-- Display status -->
+                       <a href="./booking/make_booking.php?hall_id=<?php echo htmlspecialchars($hall['id']); ?>" class="book-button">Book Now</a>
                     </div>
                 </div>
             <?php } ?>
         </div>
     </div>
 
+    <script>
+        function reserveHall(hallId) {
+            // Simulate a reservation process
+            const reservationNumber = Math.floor(Math.random() * 10000); // Generate a random reservation number
+            alert("You have successfully reserved Hall ID: " + hallId + "\nReservation Number: " + reservationNumber);
+            // Here you could also send an AJAX request to save the reservation in the database
+        }
+    </script>
 </body>
 </html>
 
 <?php
-// Close the statement and connection
+// Close the database connection
 $stmt->close();
 $conn->close();
 ?>

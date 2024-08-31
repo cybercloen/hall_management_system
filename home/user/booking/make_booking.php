@@ -1,10 +1,10 @@
 <!-- booking.php -->
 <?php
 require_once 'db.php';
-if (!isset($_SESSION['user_logged_in'])) {
-  header('Location: login.html');
-  exit;
-}
+// if (!isset($_SESSION['user_logged_in'])) {
+//   header('Location: login.html');
+//   exit;
+// }
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

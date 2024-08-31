@@ -7,5 +7,5 @@ unset($_SESSION["loggedin"]);
 unset($_SESSION["email"]);
 
 // Redirect to login page
-header("location: login.php");
+header("location: index.php");
 ?>

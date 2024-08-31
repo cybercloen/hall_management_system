@@ -3,10 +3,10 @@ require_once 'db.php';
 
 // Check if the user is logged in
 session_start();
-if (!isset($_SESSION['admin_logged_in'])) {
-    header('Location: login.php');
-    exit;
-}
+// if (!isset($_SESSION['admin_logged_in'])) {
+//     header('Location: login.php');
+//     exit;
+// }
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

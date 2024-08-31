@@ -20,8 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user_data = $result->fetch_assoc();
         if (password_verify($password, $user_data["password"])) {
             // Login successful, start session and redirect to dashboard
-            $_SESSION["user_id"] = $user_data["id"];
-            $_SESSION["email"] = $email;
+          // Store user information in session
+            $_SESSION['user_login'] = true;
+            $_SESSION['username'] = $user_data['username'];
+            $_SESSION['user_id'] = $user_data['id'];
             header("Location: ../dashboard.php");
             exit;
         } else {

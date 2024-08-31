@@ -40,6 +40,34 @@ if (isset($_GET["query"]) && isset($_GET["search_by"])) {
         $result = mysqli_stmt_get_result($stmt);
         
         // Display search results
+        echo '<style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f4;
+                    color: #333;
+                }
+                h2 {
+                    color: #0056b3; /* Blue color for the heading */
+                }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 20px;
+                }
+                th, td {
+                    padding: 10px;
+                    border: 1px solid #ddd;
+                    text-align: left;
+                }
+                th {
+                    background-color: #0056b3; /* Blue background for header */
+                    color: white;
+                }
+                tr:hover {
+                    background-color: #f1f1f1;
+                }
+              </style>';
+
         if (mysqli_num_rows($result) > 0) {
             echo "<h2>Search Results</h2>";
             echo "<table>";

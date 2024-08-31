@@ -1,15 +1,16 @@
 <?php
 session_start();
-if (!isset($_SESSION['admin_logged_in'])) {
-    header('Location: login.php');
-    exit;
-}
+// Uncomment the following lines if you want to enforce login
+// if (!isset($_SESSION['admin_logged_in'])) {
+//     header('Location: login.php');
+//     exit;
+// }
 
 // Include database connection
 require_once 'db.php';
 
 // Example query for statistics (adjust as necessary)
-$query = "SELECT hall_id, COUNT(*) as total_bookings FROM halls GROUP BY hall_id";
+$query = "SELECT id, COUNT(*) as total_bookings FROM halls GROUP BY id";
 $result = mysqli_query($conn, $query);
 ?>
 
@@ -105,19 +106,19 @@ $result = mysqli_query($conn, $query);
         <a href="./view_hall_statistics.php">View Hall Statistics</a>
         <a href="./view_bookings.php">All Bookings</a>
         <a href="./view_users.php">View All Users</a>
-        <a href="./#">Calender</a>
+        <a href="./#">Calendar</a>
         <a href="./logout.php">Logout</a>
     </div>
     <div class="container">
         <h1>Hall Statistics</h1>
         <table>
             <tr>
-                <th>Hall ID</th>
+                <th>ID</th>
                 <th>Total Bookings</th>
             </tr>
             <?php while ($row = mysqli_fetch_assoc($result)) { ?>
             <tr>
-                <td><?php echo htmlspecialchars($row['hall_id']); ?></td>
+                <td><?php echo htmlspecialchars($row['id']); ?></td>
                 <td><?php echo htmlspecialchars($row['total_bookings']); ?></td>
             </tr>
             <?php } ?>

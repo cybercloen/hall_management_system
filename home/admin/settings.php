@@ -42,6 +42,43 @@
             text-decoration: underline;
         }
 
+        /* Sidebar Styles */
+        .sidebar {
+            width: 200px; 
+            background-color: #4a90e2;
+            padding: 15px; 
+            height: 100vh;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px; /* Adjust for navbar height */
+        }
+
+        .sidebar h2 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 15px; 
+            font-size: 1.5em; 
+        }
+
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            padding: 8px; 
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-weight: 600;
+            font-size: 0.9em; 
+        }
+
+        .sidebar a:hover {
+            background-color: #357ab8;
+        }
+
         /* Container Styles */
         .container {
             max-width: 500px;
@@ -50,6 +87,7 @@
             background-color: #fff;
             border: 1px solid #ddd;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-left: 220px; /* Space for sidebar */
         }
         
         /* Form Styles */
@@ -85,9 +123,17 @@
     </style>
 </head>
 <body>
-     <div class="sidebar">
-        <h2>Admin Menu</h2>
-      <div class="sidebar">
+    <div class="navbar">
+        <h1>Admin Panel</h1>
+        <ul>
+            <li><a href="dashboard.php">Dashboard</a></li>
+            <li><a href="users.php">Users</a></li>
+            <li><a href="settings.php">Settings</a></li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar">
         <h2>Admin Menu</h2>
         <a href="./add_hall.php">Add Hall</a>
         <a href="./view_hall.php">Manage Halls</a>
@@ -101,16 +147,6 @@
         <a href="./view_bookings.php">All Bookings</a>
         <a href="./view_users.php">View All Users</a>
         <a href="./logout.php">Logout</a>
-    </div>
-    </div>
-    <div class="navbar">
-        <h1>Admin Panel</h1>
-        <ul>
-            <li><a href="dashboard.php">Dashboard</a></li>
-            <li><a href="users.php">Users</a></li>
-            <li><a href="settings.php">Settings</a></li>
-            <li><a href="logout.php">Logout</a></li>
-        </ul>
     </div>
 
     <div class="container">
@@ -132,7 +168,7 @@
                 <label for="confirm-password">Confirm Password:</label>
                 <input type="password" id="confirm-password" name="confirm-password" class="form-control" required>
             </div>
-            <input type="submit" name="submit" value="Update Settings" class="btn-submit">
+            <button type="submit" class="btn-submit">Update Settings</button>
         </form>
     </div>
 </body>
